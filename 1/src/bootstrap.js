@@ -7,7 +7,7 @@ const PTSCRIPT_NAMESOURCE_SOURCEPATH = "/ptcorenamespace";
 const PTSCRIPT_CORENAMESPACE_ELEMENT_ID = "pingyo-corenamespace";
 const ERROR_CAPTURE_AUTHORITY_URL = 'https://pt-coreservice.pingyo.com:9467/api/system/clienterror';
 
-const pingyo = {
+export const pingyo = {
   // reference to self
   ptBootstrapScriptElement: document.getElementById(PTSCRIPT_BOOTSTRAP_ELEMENT_ID),
   // Fields
@@ -53,15 +53,23 @@ const pingyo = {
   // },
   loadScript: (scriptName) => {
     console.log(555, pingyo[scriptName])
-    return import('/zzz.js').then((obj) => {
+    return import(
+      /* webpackMode: "lazy" */
+      /* webpackPrefetch: true */
+      /* webpackPreload: true */
+      // '/zzz.js'
+      '/1/dist/pingyo.core.bundle.js'
+      // 'lodash'
+    ).then((obj) => {
+      // delete window.core;
       console.log(6661, obj);
-      console.log(6662, obj[scriptName].extension);
-      debugger
+      // console.log(6662, obj[scriptName].extension);
+      // debugger
       pingyo[scriptName] = {
         ...(pingyo[scriptName] || {}),
         ...obj[scriptName].extension,
       };
-      console.log(777, pingyo[scriptName])
+      // console.log(777, pingyo[scriptName])
     }).catch((err) => {console.error(err)});
   },
   core: {
@@ -70,5 +78,6 @@ const pingyo = {
     urlParser,
   },
 };
-window.pingyo = pingyo;
-console.log(111111111, pingyo)
+// window.pingyo = pingyo;
+// console.log(111111111, pingyo)
+// export pingyo

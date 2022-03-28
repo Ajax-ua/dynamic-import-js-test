@@ -45,15 +45,15 @@ export const http = {
         //
         // return request(url, 'POST', 'application/json; charset=utf-8', options, json);
     },
-    load: function() {
-        // const { core } =
-          return import('/zzz.js').then(({core}) => {
-              this.put = core.http.put;
-          });
-        // console.log(123, core)
-        // this.put = core.bootstrap.http.put;
-        // this.isExtended = true;
-    },
+    // load: function() {
+    //     // const { core } =
+    //       return import('/zzz.js').then(({core}) => {
+    //           this.put = core.http.put;
+    //       });
+    //     // console.log(123, core)
+    //     // this.put = core.bootstrap.http.put;
+    //     // this.isExtended = true;
+    // },
 
     // methods to be loaded later
     put: function (url, body, options) {

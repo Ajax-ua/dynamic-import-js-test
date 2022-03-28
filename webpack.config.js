@@ -1,6 +1,5 @@
 const path = require('path')
 const WebpackConcatPlugin = require('webpack-concat-files-plugin');
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 console.log(path.resolve(__dirname, 1 + '/src/bootstrap.js'))
 module.exports = (env) => ({
@@ -14,23 +13,21 @@ module.exports = (env) => ({
     filename: 'pingyo.[name].bundle.js',
     chunkFilename: '[name].chunk.js',
     clean: true,
-    // library: 'pingyo2',
-    // libraryTarget: "global",
-    // libraryTarget: 'umd',
-    library: {
-      type: "module",
-    },
+    libraryTarget: "umd2",
+    // library: {
+    //   type: "module",
+    // },
     // environment: {
     //   module: true,
     //   dynamicImport: true,   // Note you need to enable `dynamicImport ` here
     // },
   },
-  experiments: { outputModule: true },
-  externalsType: "import",
-  // externalsType: "module",
+  // experiments: { outputModule: true },
+  // externalsType: "import",
+  externalsType: "script",
   externals: {
-    '/zzz.js': '/1/dist/pingyo.core.bundle.js',
-    // '/zzz.js': 'https://unpkg.com/react@17/umd/react.development.js',
+    '/1/dist/pingyo.core.bundle.js': ['http://127.0.0.1:8081/1/dist/pingyo.core.bundle.js', 'core'],
+    'bootstrap.js': ['/1/dist/pingyo.bootstrap.bundle.js', 'pingyo'],
   },
   module: {
     rules: [
@@ -44,11 +41,20 @@ module.exports = (env) => ({
               '@babel/preset-env'
             ],
             plugins: [
+              // [
+              //   "@babel/plugin-transform-modules-umd",
+              //   {
+              //     "globals": {
+              //       "es6-promise": "Promise",
+              //       "lodash": "https://cdn.jsdelivr.net/npm/lodash@4.17.19/lodash.min.js",
+              //     }
+              //   }
+              // ],
               [
                 "@babel/plugin-transform-runtime",
                 {
                   "regenerator": true,
-                  "corejs": 3, // or 2; if polyfills needed
+                  // "corejs": 3, // or 2; if polyfills needed
                 },
               ],
             ],
